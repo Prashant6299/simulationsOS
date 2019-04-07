@@ -369,12 +369,7 @@ int main()
     //function to sort all the processes in ascending order of their arrival times
     insertionSort();
     //Round robin algorithm performed on the final queue that is obtained
-    int i;
-    for(i=0;i<ccount;i++)
-    {
 
-        printf("%d %d %d\n", complete[i].pid, complete[i].atime, complete[i].btime);
-    }
     rralgo();
     display();
 
