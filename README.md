@@ -29,4 +29,6 @@ A=3
 B=3
 C=2
 
-Solution: Bankers Algorithm is what I've used here. This algorithm tells us about the safe state and also helps us find the safe sequence. First of all a need matrix is calulated and then the algorithm proceeds further to find the safe sequence.
+Solution: 
+Bankers Algorithm is what I've used here. This algorithm tells us about the safe state and also helps us find the safe sequence. First of all a need matrix is calulated and then the algorithm proceeds further to find the safe sequence.
+The input to the program is directly supplied as given in the table, without prompting the user to enter any values.
