@@ -33,6 +33,7 @@ void insertionSort()
     for (i = 1; i < ccount; i++) {
         key = complete[i];
         j = i - 1;
+	    
         //if arrival time of any previous process is less than swap the process
         //until the process is at it's correct position
         while (j >= 0 && complete[j].atime > key.atime) {
@@ -49,19 +50,23 @@ void rralgo(){
 	//time = complete[0].atime is used for initializing the time with the first arrived process's arrival time
     int time = complete[0].atime, cc=0, i, j, check;
 
-    //while the total time is less than 120 minutes and
-    //all the processes are not processes we'll run the loop
+    	//while the total time is less than 120 minutes and
+   	 //all the processes are not processes we'll run the loop
 	while(time!=120 && cc!=ccount){
-    //iterate through the processes
+		
+   		 //iterate through the processes
 		for(i=0; i<ccount; i++){
-		    //when arrival time is less than the starting time
+			
+	    //when arrival time is less than the starting time
             if(complete[i].atime<=time ){
-            //when burst time is grater than time quantum
+		    
+           		 //when burst time is grater than time quantum
 			if(complete[i].tempbt > quanta){
 				time += quanta;
 				complete[i].tempbt -= quanta;
 			}
-            //when burst time is less than time quantum
+		    
+         		//when burst time is less than time quantum
 			else if(complete[i].tempbt <=quanta && complete[i].tempbt!=0){
 				time += complete[i].tempbt;
 				complete[i].tempbt =0;
@@ -69,6 +74,7 @@ void rralgo(){
 				cc++;
 			}
             }
+			
             //if arrival time is greater than the present time
             else{
                 check=0;
@@ -82,6 +88,7 @@ void rralgo(){
                         break;
                     }
                 }
+		    
                 //if no process is present to execute int the current time
                 //we increase the present time to the closest process's arrival time
                 if(check==0)
@@ -92,6 +99,7 @@ void rralgo(){
             }
 		}
 	}
+	
 	//if  time limit exceeds then issue a warning because Sudesh can run the system
 	//from 10am to 12pm only
 	if(time>120)
@@ -180,6 +188,7 @@ void all_processes()
 
         //loop till all the processes are not completed
 		while(tempsc<scount && tempfc<fcount){
+			
             //if arrival time of student and faculty is same then
             //faculty is given the higher priority
 			if(faculty[tempfc].atime == student[tempsc].atime){
@@ -362,16 +371,19 @@ int main()
 {
     //instruction
     printf("Instructions:\n-Time format is HHMM (First two digit are for hours next two for minutes)\n Example: 10:30 would be written as 1030.\n-Make sure time is between 1000 and 1200 and minute part shouldn't exceed 60.\n-Time units used: Minutes.\n-Faculty type queries are given priority. Enter 1 for Faculty and 2 for Student in process type.\n-Process ID can be a string of length less than 5.\n-Wrong input will lead to program termination!\n\n");
+   
     //function to input data
     input();
+	
     //function used to combine the faculty process queue and student process queue into a single queue
     all_processes();
+	
     //function to sort all the processes in ascending order of their arrival times
     insertionSort();
+	
     //Round robin algorithm performed on the final queue that is obtained
-
     rralgo();
+	
     display();
-
     return 0;
 }
