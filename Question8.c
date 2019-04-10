@@ -17,7 +17,7 @@ struct process
     int tempbt;
 
 }student[100], faculty[100], complete[100];
-//faculty queue, student queue and final queue(combining faculty and student
+//faculty queue, student queue and final queue(combining faculty and student)
 
 
 int n, fcount=0, scount=0, ccount=0, quanta;
@@ -27,7 +27,7 @@ int n, fcount=0, scount=0, ccount=0, quanta;
 void insertionSort()
 {
     int i, j;
-    //temp variable to store a structure
+    //temporary variable to store a structure of process
     struct process key;
 
     for (i = 1; i < ccount; i++) {
@@ -126,6 +126,8 @@ void display(){
             c=complete[i].ctime-120;
             c+=1200;
             ar[j]=i;
+	    
+            //increment variable j if any process exceeds completion time of 1200 hours
             j++;
         }
         //if the completion time exceeds 60 minutes then to put in a proper format this is being used
@@ -156,11 +158,15 @@ void display(){
 
 		printf("\n %s\t| %d\t| %d\t| %d\t| %d\t| %d",
 		complete[i].pid, a, complete[i].btime, c, (complete[i].ctime-complete[i].atime), ((complete[i].ctime-complete[i].atime)- complete[i].btime));
-		total_res+= (complete[i].ctime-complete[i].atime);
+		
+		//total time spend on resolving processes
+		total_res+= complete[i].btime;
 	}
 
 	//average time spend on a query=sum total of time spent on all queries/Number of queries present
 	average = total_res/ccount;
+	
+    //if j!=0 then it means that there is/are some process that were not able to complete  before 1200 hours	
     if(j!=0){
     printf("\n\nProcess_ID");
 
@@ -171,7 +177,22 @@ void display(){
     }
     printf(" were not able to complete because their time crossed 1200.");
     }
-	printf("\n\n-->Total Time spent on handling queries: %d Minutes\n", total_res);
+
+    //if Sudesh has more work that exceeds 1200 hours then the addtional time that he would have needed to complete the work is stored in 
+    //bal(balance) variable
+    int bal=0;
+    if(total_res>120)
+    {
+        total_res=120;
+        bal=total_res-120;
+    }
+
+    printf("\n\n-->Total Time spent on handling queries: %d Minutes", total_res);
+
+    if(bal!=0)
+    {
+        printf("\n\n-->Sudesh needed %d more minutes to complete the task that exceeded 1200 hrs.\n",bal);
+    }
 	printf("\n-->Average Query time: %.2f Minutes\n", average);
 	printf("\n-----Processes complete-----\n");
 }
@@ -186,11 +207,11 @@ void all_processes()
     //if both the queues are not empty
 	if( fcount!=0  && scount!=0){
 
-        //loop till all the processes are not completed
+       		 //loop till all the processes are not completed
 		while(tempsc<scount && tempfc<fcount){
 			
-            //if arrival time of student and faculty is same then
-            //faculty is given the higher priority
+         		 //if arrival time of student and faculty is same then
+          		//faculty is given the higher priority
 			if(faculty[tempfc].atime == student[tempsc].atime){
 				complete[ccount] = faculty[tempfc];
 				ccount++;
@@ -200,7 +221,7 @@ void all_processes()
 				tempsc++;
 			}
 
-            //else the process with less arrival time is added to the final queue
+            		//else the process with less arrival time is added to the final queue
 			else if(faculty[tempfc].atime < student[tempsc].atime){
 				complete[ccount]= faculty[tempfc];
 				ccount++;
@@ -213,7 +234,8 @@ void all_processes()
 				tempsc++;
 			}
 		}
-        //check the count of queries in final and add remaining queries to final queue
+		
+        	//check the count of queries in final and add remaining queries to final queue
 		if(ccount != (fcount+scount)){
 			if(fcount!=tempfc){
 				while(tempfc!=fcount){
